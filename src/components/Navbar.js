@@ -8,7 +8,8 @@ export default function Navbar({
     toggelMode,
     userExists,
     LogOut,
-    userName
+    userName,
+    Role
 }) {
 
     const location = useLocation();
@@ -58,9 +59,9 @@ export default function Navbar({
                         </li>
 
                         {/*  Show only when logged in */}
-                        {userExists && (
+                        {userExists && Role === "Admin" && (
                             <li className="nav-item">
-                                <Link className={isActive("/Employees")} fw-normal to="/Employees">
+                                <Link className={isActive("/Employees")} to="/Employees">
                                     Employees
                                 </Link>
                             </li>

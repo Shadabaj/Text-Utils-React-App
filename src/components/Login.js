@@ -21,8 +21,6 @@ export default function Login(props) {
           Password: value.Password
         });
 
-        console.log("Login Response: ", response.data);
-        console.log("user", response.data.name);
         const userData = {
           name: response.data.name,
           userName: response.data.email,
@@ -31,14 +29,26 @@ export default function Login(props) {
 
         sessionStorage.setItem("userData", JSON.stringify(userData));
         sessionStorage.setItem("Token", response.data.token);
-         props.SetUserExists(true);
-         props.SetUserName(response.data.name);
-         
-        navigate("/Employees");
+        props.SetUserExists(true);
+        props.setUserName(response.data.name);
+        props.setRole(response.data.roles[0]);
+        switch (response.data.roles[0]) {
+          case "Admin":
+            navigate("/admin");
+            break;
 
-      } catch (error) {
+          case "User":
+            navigate("/user");
+            break;
+
+          default:
+            navigate("/");
+            break;
+        }
+      } 
+      catch (error) {
         console.log(error);
-        alert("Login failed ❌");
+        alert("Login failed");
       }
     }
   });
