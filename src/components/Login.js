@@ -21,6 +21,8 @@ export default function Login(props) {
           Password: value.Password
         });
 
+        console.log("Login Response: ", response.data);
+        console.log("user", response.data.name);
         const userData = {
           name: response.data.name,
           userName: response.data.email,
@@ -30,6 +32,8 @@ export default function Login(props) {
         sessionStorage.setItem("userData", JSON.stringify(userData));
         sessionStorage.setItem("Token", response.data.token);
          props.SetUserExists(true);
+         props.SetUserName(response.data.name);
+         
         navigate("/Employees");
 
       } catch (error) {

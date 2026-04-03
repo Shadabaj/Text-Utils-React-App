@@ -19,6 +19,7 @@ function App() {
   const [Mode, setMode] = useState('light');
   const [alert, SetAlert] = useState(null);
   const [userExists, SetUserExists] = useState(false);
+  const [userName, setUserName] = useState('');
 
   const navigate = useNavigate();
 
@@ -26,6 +27,8 @@ function App() {
     const userData = JSON.parse(sessionStorage.getItem("userData"));
     if (userData && userData.userName) {
       SetUserExists(true);
+      setUserName(userData.name);
+      console.log("User Exists: ", userData.name);
     }
   }, []);
 
@@ -67,11 +70,19 @@ function App() {
   };
   return (
     <>
-      <Navbar Mode={Mode} title="TextUtils" aboutText="Tell Us About" toggelMode={toggelMode} userExists={userExists} LogOut={LogOut} />
+      <Navbar Mode={Mode} title="TextUtils" aboutText="Tell Us About" toggelMode={toggelMode} userExists={userExists} userName={userName} LogOut={LogOut} />
       <Alert alert={alert} />
       <div className='container my-3'>
         <Routes>
-          <Route exact path="/Login" element={<Login email="Email address" password="Password" SetUserExists={SetUserExists}/>}></Route>
+          <Route path="/Login" element={
+            <Login
+              email="Email address"
+              password="Password"
+              setUserExists={SetUserExists}
+              setUserName={setUserName}
+            />
+          }
+          />
           <Route exact path="Employees" element={<EmployeeList />}></Route>
           <Route exact path="/about" element={<AboutUs />} />
           <Route exact path="/" element={
