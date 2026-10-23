@@ -33,7 +33,7 @@ export default function Textform(props) {
                 <h1>{props.heading}</h1>
 
                 <div className="mb-3">
-                    <label className="form-label">Example Text Area</label>
+                    <label className="form-label" htmlFor="myBox">Example Text Area</label>
                     <textarea
                         className="form-control"
                         id="myBox"
