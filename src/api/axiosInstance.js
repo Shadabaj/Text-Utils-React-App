@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-    baseURL: "https://localhost:7023/api",
+    baseURL: process.env.REACT_APP_API_BASE_URL || "https://localhost:7023/api",
 });
 
 // 🔥 REQUEST INTERCEPTOR
@@ -27,7 +27,7 @@ axiosInstance.interceptors.response.use(
         if (error.response && error.response.status === 401) {
             alert("Session expired. Please login again.");
 
-            sessionStorage.removeItem("token");
+            sessionStorage.removeItem("Token");
 
             window.location.href = "/Login"; // redirect globally
         }
