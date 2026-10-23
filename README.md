@@ -1,70 +1,86 @@
-# Getting Started with Create React App
+# Text Utilities & Employee Portal
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A React application that combines text-analysis utilities with login, employee-management, and role-based user/admin screens backed by an ASP.NET Core API.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+### Text utilities
+- Convert entered text to uppercase or lowercase.
+- Clear text and display action feedback.
+- Switch between light and dark presentation modes.
+- Navigate to an About page.
 
-### `npm start`
+### Employee portal
+- Login flow that calls a backend API.
+- Employee create/list and administrative UI modules.
+- Separate user and administrator route modules loaded lazily.
+- Axios request interceptor that adds the stored bearer token when present.
+- Session-based client state for the signed-in user.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Some workflows depend on the companion backend being available. Client-side role checks and route guards are not a substitute for server-side authorization.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Technology stack
 
-### `npm test`
+- React and JavaScript
+- React Router
+- Axios
+- Formik and Yup
+- Create React App / `react-scripts`
+- React Testing Library and Jest
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Local setup
 
-### `npm run build`
+### Prerequisites
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Node.js and npm
+- A running instance of the companion ASP.NET Core API for employee/login workflows
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Configure the API base URL
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Copy `.env.example` to `.env.local` and set `REACT_APP_API_BASE_URL` to the API base URL for your local environment. The default fallback is `https://localhost:7023/api`.
 
-### `npm run eject`
+React environment variables are embedded into the client bundle; never store server secrets or private API keys in them.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Install and start
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+~~~bash
+npm ci
+npm start
+~~~
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Open `http://localhost:3000/`.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Build and test
 
-## Learn More
+~~~bash
+npm test
+npm run build
+~~~
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Project structure
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+~~~text
+src/
+├── api/                  # Shared Axios client and interceptors
+├── components/
+│   ├── Admin/             # Administrator routes and screens
+│   ├── User/              # User routes and screens
+│   ├── Textform.js        # Text conversion utilities
+│   ├── Login.js           # Login interface
+│   ├── CreateEmployee.js  # Employee creation screen
+│   └── EmployeeList.js    # Employee listing
+├── App.js
+└── index.js
+~~~
 
-### Code Splitting
+## Security and maintenance
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- Keep authentication and authorization decisions on the server.
+- Avoid treating browser storage as a secure vault for sensitive data.
+- Review logout/session-expiry behavior when changing authentication.
+- Configure the API URL via environment-specific settings rather than hard-coding deployment endpoints.
+- Run the test and production build commands before deployment.
 
-### Analyzing the Bundle Size
+## License
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+No license file is currently included. Add an explicit license before inviting others to reuse or redistribute this project.
